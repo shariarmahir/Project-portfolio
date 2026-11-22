@@ -1,12 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat } from "next/font/google";
+import localFont from "next/font/local";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import "./globals.css";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+// Self-hosted (SIL OFL, see app/fonts/OFL-LICENSE.txt) so the build never depends on
+// reaching Google Fonts — a failed fetch there breaks Vercel builds.
+const montserrat = localFont({
+  src: "./fonts/montserrat-latin-wght-normal.woff2",
+  weight: "100 900",
+  style: "normal",
   variable: "--font-montserrat",
   display: "swap",
 });

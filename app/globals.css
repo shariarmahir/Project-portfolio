@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-canvas font-sans text-body antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4 {
+    @apply font-semibold text-ink;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: #fde68a;
+    color: #0a2540;
+  }
+}
+
+@layer components {
+  .h1 {
+    font-size: clamp(2.6rem, 6vw, 5rem);
+  }
+  .h2 {
+    font-size: clamp(2.2rem, 4.6vw, 4rem);
+  }
+  .h3 {
+    font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+    line-height: 1.1;
+  }
+  .statement {
+    @apply font-semibold text-ink;
+    font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+  .kicker {
+    @apply text-[15px] font-semibold text-cobalt;
+    letter-spacing: -0.01em;
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+  .measure {
+    max-width: 68ch;
+  }
+  .spec-row {
+    @apply flex items-baseline justify-between gap-6 border-b border-line py-3 text-[15px] last:border-0;
+  }
+  .spec-row > dt {
+    @apply text-muted;
+  }
+  .spec-row > dd {
+    @apply num text-right font-semibold text-ink;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

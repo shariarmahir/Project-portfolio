@@ -5,30 +5,6 @@ import { ChevronDown } from "lucide-react";
 import { Bolt } from "@/components/site/marks";
 import { PlayToggle, useVideoControl } from "@/components/site/media";
 import { VIDEOS } from "@/lib/media";
-import { cn } from "@/lib/utils";
-
-export function Ticker({ words }: { words: readonly string[] }) {
-  const reduce = useReducedMotion();
-  const row = (
-    <ul className="flex shrink-0 items-center" aria-hidden>
-      {words.map((w) => (
-        <li key={w} className="flex items-center whitespace-nowrap">
-          <span className="px-7 text-[clamp(1.6rem,3vw,2.6rem)] font-semibold tracking-display text-navy">{w}</span>
-          <Bolt className="h-7 w-5" />
-        </li>
-      ))}
-    </ul>
-  );
-  return (
-    <div className="overflow-hidden border-y border-line py-6">
-      <p className="sr-only">Tools and standards used: {words.join(", ")}.</p>
-      <div className={cn("flex w-max", !reduce && "animate-marquee hover:[animation-play-state:paused]")}>
-        {row}
-        {row}
-      </div>
-    </div>
-  );
-}
 
 export function FindingsBand({ findings }: { findings: readonly string[] }) {
   const reduce = useReducedMotion();
@@ -59,7 +35,6 @@ export function VideoFeature({ caption }: { caption: string }) {
   return (
     <figure className="relative overflow-hidden rounded-panel bg-navy">
       <video ref={ref} src={VIDEOS.install.src} poster={VIDEOS.install.poster} muted loop playsInline preload="metadata" className="aspect-[16/9] w-full object-cover" aria-label={caption} />
-      <span className="absolute left-5 top-5 rounded-lg bg-white px-3 py-1 text-[13px] font-semibold text-navy">Video</span>
       <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-navy/80 to-transparent p-6 pt-24 text-white">
         <span className="max-w-lg text-lg font-semibold tracking-snug">{caption}</span>
         <PlayToggle playing={playing} onClick={toggle} label="installation video" />

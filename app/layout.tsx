@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
+import { CreditsTab } from "@/components/site/credits-tab";
+import { SparkScrollbar } from "@/components/site/spark-scrollbar";
 import "./globals.css";
 
 // Self-hosted (SIL OFL, see app/fonts/OFL-LICENSE.txt) so the build never depends on
@@ -33,8 +35,8 @@ export const viewport: Viewport = { themeColor: "#F8FAFC", colorScheme: "light" 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={montserrat.variable}>
-      <body>
+    <html lang="en" className={montserrat.variable} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-navy focus:px-5 focus:py-3 focus:text-white"
@@ -44,6 +46,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <CreditsTab />
+        <SparkScrollbar />
       </body>
     </html>
   );

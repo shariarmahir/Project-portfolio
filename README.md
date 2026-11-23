@@ -52,3 +52,9 @@ The "Visit link" card points to the Google Drive folder set in `lib/data.ts` (`S
 
 - Replace the placeholder contact email `SITE.email` in `lib/data.ts`.
 - Photos are from Unsplash (Unsplash License) and video from Mixkit (Mixkit Free License); credits are listed in the footer.
+
+## Author photo and download password
+
+- **Author portrait:** save a photo as `public/images/author.jpg` (or `.png` / `.webp`). The author page and the home tile pick it up automatically; until then a monogram is shown.
+- **Download password:** every download opens a dialog asking for the access password, set as `ACCESS_PASSWORD` in `components/site/download-gate.tsx` (currently `password`). This is a browser-side gate only: the files in `public/downloads/` can still be opened by anyone who knows their direct URL.
+- **Document covers:** thumbnails live in `public/media/covers/<file-base-name>.jpg`. Regenerate them if a document's first page changes.

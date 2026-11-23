@@ -68,7 +68,6 @@ export const WHY = [
 export const SYSTEMS = [
   {
     key: "station",
-    kicker: "Thesis core",
     title: "18 kWp IoT charging station",
     body: "Designed in MATLAB Simulink, built as a 30 W laboratory prototype and monitored live through ThingSpeak. This is the station the thesis measures, prices and follows from cradle to grave.",
     points: ["23.9 MWh a year at a performance ratio near 84%", "ESP32 telemetry: SOC, current, temperature, fire alarm", "Charging capped at 80% SOC to protect the pack"],
@@ -79,7 +78,6 @@ export const SYSTEMS = [
   },
   {
     key: "netmetered",
-    kicker: "Recommended deployment",
     title: "20 kW net‑metered hub",
     body: "The same station tied to the grid under SREDA and BERC net-metering. It fits on a rooftop or a parking lot, needs no land purchase and can be repeated neighbourhood by neighbourhood.",
     points: ["CAPEX BDT 18–26 lakh ($15.6K–$23.6K)", "LCOE $0.0768/kWh, below the BERC tariff of BDT 7.70", "Payback in 5.5–6 years"],
@@ -90,7 +88,6 @@ export const SYSTEMS = [
   },
   {
     key: "megahub",
-    kicker: "Commercial proposal",
     title: "300 kWp hub for 100 Easy Bikes",
     body: "A depot-scale plant: 484 Tier-1 modules, six 50 kW inverters and a smart energy management system that splits 100 metered charging points across two zones.",
     points: ["CAPEX BDT 2.27 crore", "BDT 71.75 lakh net operating profit a year", "Simple payback 3.16 years at full use"],
@@ -107,7 +104,6 @@ export const HOW_IT_WORKS = [
   { title: "Charge the fleet", body: "Bikes draw from the pack and the panels, and a fire alarm with email alerts guards the station overnight." },
 ];
 
-export const TICKER = ["MATLAB Simulink", "PVsyst", "ThingSpeak", "ESP32", "MPPT", "Monte Carlo", "ReCiPe 2016", "OpenLCA", "SREDA", "BERC", "LiFePO4"];
 
 /** Findings written as sentences (home evidence band). */
 export const FINDINGS = [

@@ -10,6 +10,7 @@ export const Slider = React.forwardRef<
   <SliderPrimitive.Root
     ref={ref}
     className={cn("relative flex w-full touch-none select-none items-center py-3", className)}
+    name={props.name ?? label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}
     {...props}
   >
     <SliderPrimitive.Track className="relative h-1.5 w-full grow rounded-full bg-tint-2">

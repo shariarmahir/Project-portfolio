@@ -1,38 +1,37 @@
 import { FramedPhoto } from "@/components/site/media";
 import type { PhotoKey } from "@/lib/media";
 
-/** Inner-page opener: kicker, title and lead, then a wide framed photo. */
+/** Inner-page opener: title and lead, an optional action, then an optional wide photo. */
 export function PageIntro({
-  kicker,
   title,
   lead,
   photo,
   children,
 }: {
-  kicker: string;
   title: React.ReactNode;
   lead: React.ReactNode;
   photo?: PhotoKey;
   children?: React.ReactNode;
 }) {
   return (
-    <header className="pt-16 sm:pt-24">
+    <header className="pt-10 sm:pt-14">
       <div className="container">
-        <p className="kicker">{kicker}</p>
-        <h1 className="h1 mt-4 max-w-[18ch]">{title}</h1>
-        <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-          <p className="measure text-lg sm:text-xl">{lead}</p>
+        <h1 className="h1">{title}</h1>
+        <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12">
+          <p className="lead sm:text-xl">{lead}</p>
           {children}
         </div>
       </div>
       {photo && (
-        <div className="px-3 pt-14 sm:px-6">
-          <FramedPhoto k={photo} className="aspect-[16/9] w-full sm:aspect-[21/8]" sizes="100vw" priority />
+        <div className="px-3 pt-10 sm:px-5 sm:pt-12">
+          <FramedPhoto k={photo} className="aspect-[16/9] w-full sm:aspect-[21/7]" sizes="100vw" priority />
         </div>
       )}
     </header>
   );
 }
+
+export { SectionNav } from "@/components/site/section-nav";
 
 export function SpecList({ rows }: { rows: readonly { k: string; v: string }[] }) {
   return (

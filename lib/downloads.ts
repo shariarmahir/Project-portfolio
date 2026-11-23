@@ -15,6 +15,8 @@ export type DownloadSlot = {
   exts: string[];
   action: string;
   group: "thesis" | "commercial" | "publication";
+  /** Page or slide count of the shipped file. */
+  length: string;
 };
 
 export const SLOTS: DownloadSlot[] = [
@@ -23,6 +25,7 @@ export const SLOTS: DownloadSlot[] = [
     title: "Project proposal: thesis",
     desc: "The MSc thesis proposal: aims, research questions, methodology, preliminary results, risks and the six-month work plan.",
     base: "thesis-proposal",
+    length: "10 pages",
     exts: ["pdf"],
     action: "Download thesis proposal",
     group: "thesis",
@@ -32,6 +35,7 @@ export const SLOTS: DownloadSlot[] = [
     title: "Project proposal: commercial",
     desc: "The 300 kWp, 100-bike solar charging hub with system design, phasing and ROI projection.",
     base: "commercial-proposal",
+    length: "10 pages",
     exts: ["pdf"],
     action: "Download commercial proposal",
     group: "commercial",
@@ -41,6 +45,7 @@ export const SLOTS: DownloadSlot[] = [
     title: "Thesis draft",
     desc: "The working draft of the MSc thesis, chapters one to seven.",
     base: "thesis-draft",
+    length: "65 pages",
     exts: ["pdf", "docx"],
     action: "Download thesis draft",
     group: "thesis",
@@ -50,6 +55,7 @@ export const SLOTS: DownloadSlot[] = [
     title: "Thesis book",
     desc: "The complete bound thesis with all figures, tables and references.",
     base: "thesis-book",
+    length: "72 pages",
     exts: ["pdf"],
     action: "Download thesis book",
     group: "thesis",
@@ -59,6 +65,7 @@ export const SLOTS: DownloadSlot[] = [
     title: "IEEE publication",
     desc: "Design and performance assessment of a multi-functional IoT-enabled solar charging station with economic and environmental analysis.",
     base: "ieee-publication",
+    length: "21 pages",
     exts: ["pdf"],
     action: "Download IEEE paper",
     group: "publication",
@@ -66,8 +73,9 @@ export const SLOTS: DownloadSlot[] = [
   {
     id: "presentation-slides",
     title: "Presentation: IoT-enabled solar EV charging infrastructure",
-    desc: "The 20-slide research deck presenting the IoT-enabled solar PV charging station for electric vehicles in Bangladesh.",
+    desc: "The research deck: station design, IoT monitoring, PVsyst economics, Monte Carlo risk and the life cycle assessment.",
     base: "presentation-iot-charging-infrastructure",
+    length: "26 slides",
     exts: ["pptx", "pdf"],
     action: "Download PPT",
     group: "publication",
@@ -75,8 +83,9 @@ export const SLOTS: DownloadSlot[] = [
   {
     id: "presentation-blueprint",
     title: "Presentation: Bangladesh solar EV blueprint",
-    desc: "The 20-slide blueprint deck for rolling out solar-powered EV charging across Bangladesh.",
+    desc: "The blueprint deck for a 300 kWp, 100-bike solar charging hub: costs, revenue, payback and phasing.",
     base: "presentation-solar-ev-blueprint",
+    length: "25 slides",
     exts: ["pptx", "pdf"],
     action: "Download PPT",
     group: "publication",
@@ -90,7 +99,13 @@ export const VISIT_LINK = {
   action: "Visit link",
 };
 
-export type ResolvedDownload = DownloadSlot & { href: string | null; ext: string | null; size: string | null };
+export type ResolvedDownload = DownloadSlot & { href: string | null; ext: string | null; size: string | null; cover: string };
+
+export const GROUP_LABEL: Record<DownloadSlot["group"], string> = {
+  thesis: "Thesis",
+  commercial: "Commercial",
+  publication: "Publication and slides",
+};
 
 function human(bytes: number) {
   if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
@@ -103,9 +118,15 @@ export function resolveDownloads(): ResolvedDownload[] {
     for (const ext of slot.exts) {
       const file = path.join(dir, `${slot.base}.${ext}`);
       if (fs.existsSync(file)) {
-        return { ...slot, href: `/downloads/${slot.base}.${ext}`, ext: ext.toUpperCase(), size: human(fs.statSync(file).size) };
+        return {
+          ...slot,
+          href: `/downloads/${slot.base}.${ext}`,
+          ext: ext.toUpperCase(),
+          size: human(fs.statSync(file).size),
+          cover: `/media/covers/${slot.base}.jpg`,
+        };
       }
     }
-    return { ...slot, href: null, ext: null, size: null };
+    return { ...slot, href: null, ext: null, size: null, cover: `/media/covers/${slot.base}.jpg` };
   });
 }

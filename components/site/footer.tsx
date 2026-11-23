@@ -3,19 +3,18 @@ import { ArrowRight } from "lucide-react";
 import { Logo } from "@/components/site/marks";
 import { Button } from "@/components/ui/button";
 import { AUDIT_HREF as auditHref, SITE, THESIS } from "@/lib/data";
-import { PHOTOS, VIDEOS } from "@/lib/media";
 
 export function Footer() {
   return (
-    <footer className="mt-32 rounded-t-slab bg-navy text-white/80">
-      <div className="container pb-10 pt-20">
-        <div className="grid gap-12 border-b border-white/15 pb-16 lg:grid-cols-[1.3fr_1fr]">
+    <footer className="rounded-t-slab bg-navy text-white/80">
+      <div className="container pb-8 pt-14 sm:pt-16">
+        <div className="grid gap-10 border-b border-white/15 pb-12 lg:grid-cols-[1.3fr_1fr]">
           <div>
-            <h2 className="h2 max-w-2xl !text-white">Partner on Bangladesh&apos;s solar charging transition</h2>
-            <p className="measure mt-6 text-lg text-white/75">
+            <h2 className="h2 !text-white">Plan a solar charging site</h2>
+            <p className="measure mt-4 text-lg text-white/75">
               Operators, investors and agencies can request a site feasibility audit: survey, load study, solar-yield model, single-line diagram and bill of quantities.
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-wrap gap-4">
               <Button asChild variant="primary" size="lg">
                 <a href={auditHref}>
                   Request a site audit <ArrowRight />
@@ -56,42 +55,16 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="grid gap-10 py-12 md:grid-cols-[auto_1fr] md:items-start">
+        <div className="flex flex-col gap-6 py-8 sm:flex-row sm:items-center sm:justify-between">
           <Logo inverse />
-          <dl className="grid gap-6 text-[14px] sm:grid-cols-3">
-            <div>
-              <dt className="font-semibold text-white">Privacy</dt>
-              <dd className="mt-1">No cookies, analytics or personal data collection.</dd>
-            </div>
-            <div>
-              <dt className="font-semibold text-white">Open data</dt>
-              <dd className="mt-1">Figures may be reused with attribution under CC BY 4.0.</dd>
-            </div>
-            <div>
-              <dt className="font-semibold text-white">IEEE copyright</dt>
-              <dd className="mt-1">Published papers remain the copyright of their publishers.</dd>
-            </div>
-          </dl>
+          <p className="text-[14px] text-white/65">Commercial figures are pre-feasibility estimates, not guaranteed returns.</p>
         </div>
 
-        <details className="group border-t border-white/15 pt-6 text-[13px] text-white/60">
-          <summary className="cursor-pointer list-none font-semibold text-white/80 hover:text-helios">Image and video credits</summary>
-          <p className="mt-3 leading-relaxed">
-            Photos from Wikimedia Commons and the author&apos;s own project:{" "}
-            {Object.values(PHOTOS).map((p, i, a) => (
-              <span key={p.src}>
-                <a href={p.source} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline">{p.credit}</a>{" "}
-                ({p.license})
-                {i < a.length - 1 ? ", " : ". "}
-              </span>
-            ))}
-            Video from Mixkit (Mixkit Free License): {Object.keys(VIDEOS).length} clips.
-          </p>
-        </details>
-
-        <p className="mt-8 flex flex-col justify-between gap-2 text-[13px] text-white/60 sm:flex-row">
+        <p className="flex flex-col justify-between gap-2 border-t border-white/15 pt-5 text-[13px] text-white/60 sm:flex-row">
           <span>© 2026 {SITE.author} · {THESIS.university}</span>
-          <span>Commercial figures are pre-feasibility estimates, not guaranteed returns.</span>
+          <span>
+            Built by <span className="font-semibold text-white">Mahir Shariar Mahin</span>
+          </span>
         </p>
       </div>
     </footer>

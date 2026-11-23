@@ -4,26 +4,29 @@ import { VideoHero } from "@/components/home/video-hero";
 import { ScrollPath } from "@/components/home/scroll-path";
 import { SystemsStack } from "@/components/home/systems";
 import { KeyTiles } from "@/components/home/tiles";
-import { Faq, FindingsBand, Ticker, VideoFeature } from "@/components/home/blocks";
+import { Faq, FindingsBand, VideoFeature } from "@/components/home/blocks";
 import { FramedPhoto } from "@/components/site/media";
 import { Bolt } from "@/components/site/marks";
 import { Button } from "@/components/ui/button";
-import { FAQ, FINDINGS, HOW_IT_WORKS, TICKER, WHY } from "@/lib/data";
+import { resolveDownloads } from "@/lib/downloads";
+import { FAQ, FINDINGS, HOW_IT_WORKS, WHY } from "@/lib/data";
 
 export default function Home() {
+  const docs = resolveDownloads().map(({ id, title, href, ext, size, length, cover }) => ({ id, title, href, ext, size, length, cover }));
+
   return (
     <>
       <VideoHero />
 
       <ScrollPath>
         {/* Statement with offset images */}
-        <section className="container grid gap-14 pb-28 pt-24 lg:grid-cols-2 lg:gap-24 lg:pt-32">
-          <div className="lg:pt-10">
+        <section className="section container grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
+          <div>
             <p className="statement">
               Bangladesh&apos;s Easy Bikes carry millions of people a day, and nearly all of them charge from the grid at night. This
               thesis designs, builds and tests a station that charges them from the sun instead.
             </p>
-            <p className="measure mt-10 text-lg lg:ml-24">
+            <p className="lead mt-8 lg:ml-20">
               The work follows one 18 kWp station through every question an examiner or an investor would ask: does the control system
               hold up, what does a unit of energy cost, how risky are the returns, and what does the hardware cost the planet from
               mine to recycling plant.
@@ -31,27 +34,27 @@ export default function Home() {
           </div>
           <div className="grid gap-5">
             <FramedPhoto k="dhakaStreet" className="aspect-[16/10] w-full lg:w-4/5" priority />
-            <FramedPhoto k="dhakaAerial" className="aspect-[16/11] w-full lg:ml-auto lg:w-[92%]" />
+            <FramedPhoto k="dhakaAerial" className="aspect-[16/10] w-full lg:ml-auto lg:w-[88%]" />
           </div>
         </section>
 
-        {/* Why it matters: bolt list with stacked photos */}
-        <section aria-labelledby="why" className="container grid gap-14 pb-32 lg:grid-cols-2 lg:gap-24">
-          <div className="grid content-start gap-5">
-            <FramedPhoto k="dhakaRain" className="aspect-[5/4] w-full" />
-            <FramedPhoto k="fieldArray" className="aspect-[16/10] w-full lg:ml-auto lg:w-4/5" />
-          </div>
-          <div>
-            <h2 id="why" className="h2 max-w-[14ch]">
-              Why Bangladesh needs it
-            </h2>
-            <ul className="mt-10">
+        {/* Why it matters */}
+        <section aria-labelledby="why" className="container pb-[clamp(3.5rem,6vw,5.5rem)]">
+          <h2 id="why" className="h2">
+            Why Bangladesh needs it
+          </h2>
+          <div className="mt-8 grid gap-12 lg:mt-10 lg:grid-cols-2 lg:gap-20">
+            <div className="grid content-start gap-5">
+              <FramedPhoto k="dhakaRain" className="aspect-[5/4] w-full" />
+              <FramedPhoto k="fieldArray" className="aspect-[16/9] w-full lg:ml-auto lg:w-3/4" />
+            </div>
+            <ul>
               {WHY.map((w) => (
-                <li key={w.title} className="border-t border-line py-9">
-                  <h3 className="flex items-center gap-4 text-[clamp(1.35rem,2vw,1.75rem)] tracking-display">
+                <li key={w.title} className="border-t border-line py-7 first:pt-0 first:border-0">
+                  <h3 className="flex items-center gap-4 text-[clamp(1.3rem,1.9vw,1.6rem)] tracking-display">
                     <Bolt /> {w.title}
                   </h3>
-                  <p className="measure mt-4 text-[17px]">{w.body}</p>
+                  <p className="measure mt-3 text-[17px]">{w.body}</p>
                 </li>
               ))}
             </ul>
@@ -59,48 +62,49 @@ export default function Home() {
         </section>
       </ScrollPath>
 
-      {/* Key routes */}
-      <section aria-label="Quick links" className="container pb-32">
-        <KeyTiles />
+      {/* Documents and key routes */}
+      <section aria-label="Documents and quick links" className="container pb-[clamp(3.5rem,6vw,5.5rem)]">
+        <KeyTiles docs={docs} />
       </section>
 
       {/* Three systems, stacked */}
       <section aria-labelledby="systems">
-        <div className="container pb-14">
-          <h2 id="systems" className="h2 max-w-[18ch]">
+        <div className="container pb-8 lg:pb-10">
+          <h2 id="systems" className="h2">
             One study, three ways to build it
           </h2>
         </div>
         <SystemsStack />
       </section>
 
-      {/* How it works: video + steps */}
-      <section aria-labelledby="how" className="container pt-32">
-        <h2 id="how" className="h2 mx-auto max-w-[20ch] text-center">
-          How the station works
-        </h2>
-        <div className="mt-14">
+      {/* How it works */}
+      <section aria-labelledby="how" className="section container">
+        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <h2 id="how" className="h2">
+            How the station works
+          </h2>
+          <p className="max-w-[44ch] text-[16px] text-muted">From sunlight on the array to a charged bike, monitored in real time.</p>
+        </div>
+        <div className="mt-8 lg:mt-10">
           <VideoFeature caption="Modules going up on a mounting frame: the first link in the chain." />
         </div>
-        <ol className="mt-14 grid gap-10 md:grid-cols-3">
+        <ol className="mt-10 grid gap-8 md:grid-cols-3">
           {HOW_IT_WORKS.map((s, i) => (
-            <li key={s.title} className="border-t-2 border-navy pt-6">
-              <p className="num text-[15px] font-semibold text-cobalt">Step {i + 1}</p>
-              <h3 className="mt-2 text-2xl tracking-display">{s.title}</h3>
-              <p className="mt-3 text-[17px]">{s.body}</p>
+            <li key={s.title} className="flex gap-5 border-t-2 border-navy pt-6">
+              <span className="num grid size-10 shrink-0 place-items-center rounded-full bg-navy text-[15px] font-semibold text-white">{i + 1}</span>
+              <div>
+                <h3 className="text-[1.4rem] tracking-display">{s.title}</h3>
+                <p className="mt-2 text-[16px]">{s.body}</p>
+              </div>
             </li>
           ))}
         </ol>
       </section>
 
-      <div className="mt-32">
-        <Ticker words={TICKER} />
-      </div>
-
       {/* Findings */}
-      <section aria-labelledby="findings" className="mt-32 bg-tint py-24">
-        <div className="container mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <h2 id="findings" className="h2 max-w-[16ch]">
+      <section aria-labelledby="findings" className="section bg-tint">
+        <div className="container mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end lg:mb-10">
+          <h2 id="findings" className="h2">
             What the results show
           </h2>
           <Button asChild variant="ghost">
@@ -113,11 +117,11 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section aria-labelledby="faq" className="container pt-32">
-        <h2 id="faq" className="h2 max-w-[18ch]">
+      <section aria-labelledby="faq" className="section container">
+        <h2 id="faq" className="h2">
           Questions examiners ask
         </h2>
-        <div className="mt-12">
+        <div className="mt-8 lg:mt-10">
           <Faq items={FAQ} />
         </div>
       </section>

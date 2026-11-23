@@ -1,57 +1,60 @@
 "use client";
 import * as React from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { ArrowRight, ChevronDown } from "lucide-react";
-import { PHOTOS } from "@/lib/media";
+import Link from "next/link";
+import { ArrowRight, Download, Search } from "lucide-react";
+import { DownloadButton, type GateDoc } from "@/components/site/download-gate";
 
-const DOCS = [
-  { id: "thesis-book", label: "Thesis book" },
-  { id: "thesis-draft", label: "Thesis draft" },
-  { id: "thesis-proposal", label: "Project proposal: thesis" },
-  { id: "commercial-proposal", label: "Project proposal: commercial" },
-  { id: "ieee-publication", label: "IEEE publication" },
-  { id: "presentation-slides", label: "Presentation: IoT charging infrastructure" },
-  { id: "presentation-blueprint", label: "Presentation: Bangladesh solar EV blueprint" },
-];
+/** Live document search: type to filter, download in place (password dialog) or open the library. */
+export function DocumentFinder({ docs }: { docs: GateDoc[] }) {
+  const [q, setQ] = React.useState("");
+  const needle = q.trim().toLowerCase();
+  const list = docs.filter((d) => d.title.toLowerCase().includes(needle) || (d.ext ?? "").toLowerCase().includes(needle));
 
-export function DocumentFinder() {
-  const router = useRouter();
-  const [doc, setDoc] = React.useState(DOCS[0].id);
   return (
-    <div className="relative overflow-hidden rounded-panel bg-tint p-7 sm:p-9">
-      <div className="pointer-events-none absolute -right-6 -top-6 hidden h-40 w-56 overflow-hidden rounded-panel sm:block">
-        <Image src={PHOTOS.chip.src} alt="" fill sizes="224px" className="object-cover" />
+    <div className="flex h-full flex-col rounded-panel bg-navy p-6 text-white/80 sm:p-9">
+      <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+        <h2 className="h3 !text-white">Find a document</h2>
+        <Link href="/downloads" className="inline-flex items-center gap-2 text-[15px] font-semibold text-helios underline-offset-4 hover:underline">
+          Open the library <ArrowRight className="size-[18px]" />
+        </Link>
       </div>
-      <h2 className="h3 max-w-[14ch]">Find a document</h2>
-      <p className="mt-3 max-w-sm text-[15px]">Every thesis document, one step away.</p>
-      <form
-        className="mt-7 flex h-16 items-center gap-2 rounded-2xl border border-line bg-white pl-5 pr-2 focus-within:border-cobalt"
-        onSubmit={(e) => {
-          e.preventDefault();
-          router.push(`/downloads#${doc}`);
-        }}
-      >
-        <label htmlFor="doc-finder" className="sr-only">
-          Choose a document
-        </label>
-        <select
-          id="doc-finder"
-          value={doc}
-          onChange={(e) => setDoc(e.target.value)}
-          className="h-full min-w-0 flex-1 cursor-pointer appearance-none bg-transparent text-base font-semibold text-ink outline-none"
-        >
-          {DOCS.map((d) => (
-            <option key={d.id} value={d.id}>
-              {d.label}
-            </option>
-          ))}
-        </select>
-        <ChevronDown className="pointer-events-none mr-2 size-5 shrink-0 text-navy" aria-hidden />
-        <button type="submit" className="inline-flex h-12 items-center gap-2 rounded-xl bg-navy px-5 text-[15px] font-semibold text-white transition-colors hover:bg-cobalt">
-          Go <ArrowRight className="size-[18px]" />
-        </button>
-      </form>
+
+      <label className="mt-6 flex h-14 items-center gap-3 rounded-2xl bg-white px-5 ring-cobalt/30 focus-within:ring-4">
+        <Search className="size-5 shrink-0 text-navy" aria-hidden />
+        <span className="sr-only">Search documents</span>
+        <input
+          id="finder-search"
+          name="finder-search"
+          type="search"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Search the thesis, proposals, paper or slides"
+          className="h-full w-full bg-transparent text-[15px] font-medium text-ink outline-none placeholder:text-muted"
+        />
+      </label>
+
+      <ul className="mt-3 max-h-[300px] flex-1 overflow-y-auto pr-1 [scrollbar-color:rgba(255,255,255,0.25)_transparent] [scrollbar-width:thin]" aria-live="polite">
+        {list.map((d) => (
+          <li key={d.id} className="flex items-center gap-4 border-b border-white/10 py-3 last:border-0">
+            <span className="relative h-12 w-9 shrink-0 overflow-hidden rounded-[4px] bg-white">
+              <Image src={d.cover} alt="" width={36} height={48} className="size-full object-cover object-top" />
+            </span>
+            <Link href={`/downloads#${d.id}`} className="min-w-0 flex-1 rounded-sm hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-helios">
+              <span className="block truncate text-[15px] font-semibold text-white">{d.title}</span>
+              <span className="mt-0.5 block text-[13px] text-white/65">{d.href ? `${d.ext} · ${d.length} · ${d.size}` : "Coming soon"}</span>
+            </Link>
+            <DownloadButton
+              doc={d}
+              aria-label={`Download ${d.title}`}
+              className="grid size-11 shrink-0 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-helios hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-helios"
+            >
+              <Download className="size-[18px]" />
+            </DownloadButton>
+          </li>
+        ))}
+        {list.length === 0 && <li className="py-8 text-[15px]">Nothing matches “{q}”. Try “thesis”, “proposal” or “slides”.</li>}
+      </ul>
     </div>
   );
 }

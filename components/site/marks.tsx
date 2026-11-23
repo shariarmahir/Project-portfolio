@@ -9,13 +9,25 @@ export function Bolt({ className }: { className?: string }) {
   );
 }
 
-/** Wordmark: a ring split by a bolt, then the name. */
+/** Wordmark: a ring with current running round it, split by a bolt, then the name. */
 export function Logo({ inverse = false }: { inverse?: boolean }) {
   return (
-    <span className="flex items-center gap-2.5">
-      <svg viewBox="0 0 36 36" aria-hidden className="size-9">
-        <circle cx="18" cy="18" r="15.5" fill="none" stroke={inverse ? "#FFFFFF" : "#0A2540"} strokeWidth="2.5" />
-        <path d="M20.4 6.5 11 19.6h6l-2 9.9 10-13.6h-6.2z" fill="#F59E0B" />
+    <span className="logo flex items-center gap-2.5">
+      <svg viewBox="0 0 36 36" aria-hidden className="size-9 overflow-visible">
+        <circle cx="18" cy="18" r="15.5" fill="none" stroke={inverse ? "rgba(255,255,255,0.9)" : "#0A2540"} strokeWidth="2.5" />
+        <circle
+          className="logo-current"
+          cx="18"
+          cy="18"
+          r="15.5"
+          fill="none"
+          stroke="#F59E0B"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          pathLength={100}
+          transform="rotate(-90 18 18)"
+        />
+        <path className="logo-bolt" d="M20.4 6.5 11 19.6h6l-2 9.9 10-13.6h-6.2z" fill="#F59E0B" />
       </svg>
       <span className={cn("text-[19px] font-bold tracking-display", inverse ? "text-white" : "text-navy")}>
         SolarEV <span className={inverse ? "text-helios" : "text-cobalt"}>BD</span>

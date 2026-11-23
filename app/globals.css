@@ -7,8 +7,10 @@
     color-scheme: light;
   }
   html {
+    /* framer-motion's useScroll measures offsets against the root; a static root triggers a console warning. */
+    position: relative;
     scroll-behavior: smooth;
-    scroll-padding-top: 96px;
+    scroll-padding-top: 132px;
     -webkit-text-size-adjust: 100%;
   }
   body {
@@ -33,24 +35,32 @@
 
 @layer components {
   .h1 {
-    font-size: clamp(2.6rem, 6vw, 5rem);
+    font-size: clamp(2.3rem, 4.4vw, 3.6rem);
   }
   .h2 {
-    font-size: clamp(2.2rem, 4.6vw, 4rem);
+    font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+    line-height: 1.1;
   }
   .h3 {
-    font-size: clamp(1.6rem, 2.6vw, 2.4rem);
-    line-height: 1.1;
+    font-size: clamp(1.45rem, 2.2vw, 2rem);
+    line-height: 1.12;
+  }
+  /* One vertical rhythm for every section on every page. */
+  .section {
+    padding-block: clamp(3.5rem, 6vw, 5.5rem);
+  }
+  .section-t {
+    padding-top: clamp(3.5rem, 6vw, 5.5rem);
+  }
+  .lead {
+    @apply text-lg text-body;
+    max-width: 68ch;
   }
   .statement {
     @apply font-semibold text-ink;
     font-size: clamp(1.35rem, 2.2vw, 1.85rem);
     line-height: 1.25;
     letter-spacing: -0.02em;
-  }
-  .kicker {
-    @apply text-[15px] font-semibold text-cobalt;
-    letter-spacing: -0.01em;
   }
   .num {
     font-variant-numeric: tabular-nums;
@@ -67,6 +77,71 @@
   .spec-row > dd {
     @apply num text-right font-semibold text-ink;
   }
+}
+
+/* ---------- Scrollbars ---------- */
+/* Inner scroll areas: thin, quiet native bars. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #b8c6d9 transparent;
+}
+/* The page bar is replaced by the spark scrollbar on mouse and trackpad devices. */
+html.spark-scroll {
+  scrollbar-width: none;
+}
+html.spark-scroll::-webkit-scrollbar {
+  display: none;
+}
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+@keyframes current-flow {
+  from { background-position: 0 0; }
+  to { background-position: 0 -200%; }
+}
+@keyframes spark-flicker {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  20% { opacity: 0.55; transform: scale(0.8); }
+  24% { opacity: 1; transform: scale(1.25); }
+  48% { opacity: 0.8; transform: scale(0.95); }
+  52% { opacity: 1; transform: scale(1.15); }
+  76% { opacity: 0.6; transform: scale(0.85); }
+}
+.spark-thumb {
+  background-image: linear-gradient(180deg, #1d4ed8 0%, #38bdf8 25%, #f59e0b 50%, #38bdf8 75%, #1d4ed8 100%);
+  background-size: 100% 200%;
+  animation: current-flow 1.4s linear infinite;
+}
+.spark-dot {
+  background: radial-gradient(circle, #fff7d6 0%, #fbbf24 45%, rgba(245, 158, 11, 0) 72%);
+  animation: spark-flicker 0.9s steps(6, end) infinite;
+}
+
+/* ---------- Logo: current running round the ring, bolt that arcs now and then ---------- */
+@keyframes logo-current {
+  to { stroke-dashoffset: -100; }
+}
+@keyframes logo-arc {
+  0%, 86%, 100% { opacity: 1; filter: none; }
+  88% { opacity: 0.35; }
+  89% { opacity: 1; filter: drop-shadow(0 0 3px #fbbf24) brightness(1.25); }
+  91% { opacity: 0.5; }
+  93% { opacity: 1; filter: drop-shadow(0 0 4px #fbbf24) brightness(1.3); }
+}
+.logo-current {
+  stroke-dasharray: 16 84;
+  animation: logo-current 3.2s linear infinite;
+}
+.logo-bolt {
+  animation: logo-arc 4.5s ease-out infinite;
+  transform-origin: center;
+}
+.logo:hover .logo-current {
+  animation-duration: 0.9s;
+}
+.logo:hover .logo-bolt {
+  animation-duration: 1.2s;
 }
 
 @media (prefers-reduced-motion: reduce) {

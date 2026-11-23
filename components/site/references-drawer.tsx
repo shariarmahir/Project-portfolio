@@ -25,6 +25,9 @@ export function ReferencesDrawer({ children }: { children: React.ReactNode }) {
           <label className="mt-6 flex h-14 items-center gap-3 rounded-2xl border border-line bg-white px-5 focus-within:border-cobalt">
             <span className="sr-only">Search references</span>
             <input
+              id="reference-search"
+              name="reference-search"
+              type="search"
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search by author, title or journal"

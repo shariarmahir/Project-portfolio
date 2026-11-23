@@ -21,7 +21,7 @@ export const SLOTS: DownloadSlot[] = [
   {
     id: "thesis-proposal",
     title: "Project proposal: thesis",
-    desc: "The approved MSc thesis proposal: aims, method and expected outcomes.",
+    desc: "The MSc thesis proposal: aims, research questions, methodology, preliminary results, risks and the six-month work plan.",
     base: "thesis-proposal",
     exts: ["pdf"],
     action: "Download thesis proposal",
@@ -65,11 +65,20 @@ export const SLOTS: DownloadSlot[] = [
   },
   {
     id: "presentation-slides",
-    title: "Presentation slides",
-    desc: "The thesis defense deck: architecture, prototype, economics, sensitivity and LCA.",
-    base: "presentation-slides",
+    title: "Presentation: IoT-enabled solar EV charging infrastructure",
+    desc: "The 20-slide research deck presenting the IoT-enabled solar PV charging station for electric vehicles in Bangladesh.",
+    base: "presentation-iot-charging-infrastructure",
     exts: ["pptx", "pdf"],
-    action: "Download slides",
+    action: "Download PPT",
+    group: "publication",
+  },
+  {
+    id: "presentation-blueprint",
+    title: "Presentation: Bangladesh solar EV blueprint",
+    desc: "The 20-slide blueprint deck for rolling out solar-powered EV charging across Bangladesh.",
+    base: "presentation-solar-ev-blueprint",
+    exts: ["pptx", "pdf"],
+    action: "Download PPT",
     group: "publication",
   },
 ];

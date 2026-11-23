@@ -36,7 +36,8 @@ Put each file in `public/downloads/` using exactly these names, then rebuild. Ea
 | Thesis draft | `thesis-draft.pdf` or `thesis-draft.docx` |
 | Thesis book | `thesis-book.pdf` |
 | IEEE publication | `ieee-publication.pdf` |
-| Presentation slides | `presentation-slides.pptx` or `presentation-slides.pdf` |
+| Presentation: IoT charging infrastructure | `presentation-iot-charging-infrastructure.pptx` (or `.pdf`) |
+| Presentation: Bangladesh solar EV blueprint | `presentation-solar-ev-blueprint.pptx` (or `.pdf`) |
 
 The "Visit link" card points to the Google Drive folder set in `lib/data.ts` (`SITE.drive`).
 

@@ -77,10 +77,11 @@ export function Footer() {
         <details className="group border-t border-white/15 pt-6 text-[13px] text-white/60">
           <summary className="cursor-pointer list-none font-semibold text-white/80 hover:text-helios">Image and video credits</summary>
           <p className="mt-3 leading-relaxed">
-            Photos from Unsplash (Unsplash License):{" "}
+            Photos from Wikimedia Commons and the author&apos;s own project:{" "}
             {Object.values(PHOTOS).map((p, i, a) => (
               <span key={p.src}>
-                <a href={p.source} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline">{p.credit}</a>
+                <a href={p.source} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline">{p.credit}</a>{" "}
+                ({p.license})
                 {i < a.length - 1 ? ", " : ". "}
               </span>
             ))}

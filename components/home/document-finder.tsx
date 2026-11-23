@@ -11,7 +11,8 @@ const DOCS = [
   { id: "thesis-proposal", label: "Project proposal: thesis" },
   { id: "commercial-proposal", label: "Project proposal: commercial" },
   { id: "ieee-publication", label: "IEEE publication" },
-  { id: "presentation-slides", label: "Presentation slides" },
+  { id: "presentation-slides", label: "Presentation: IoT charging infrastructure" },
+  { id: "presentation-blueprint", label: "Presentation: Bangladesh solar EV blueprint" },
 ];
 
 export function DocumentFinder() {

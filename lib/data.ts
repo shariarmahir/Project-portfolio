@@ -90,7 +90,7 @@ export const SYSTEMS = [
     key: "megahub",
     title: "300 kWp hub for 100 Easy Bikes",
     body: "A depot-scale plant: 484 Tier-1 modules, six 50 kW inverters and a smart energy management system that splits 100 metered charging points across two zones.",
-    points: ["CAPEX BDT 2.27 crore", "BDT 71.75 lakh net operating profit a year", "Simple payback 3.16 years at full use"],
+    points: ["CAPEX BDT 2.27 crore, built in 100 kWp blocks", "Discounted payback 6.2 years at 80% use (two-shift)", "Break-even at about 49% utilisation"],
     images: ["farmAerial", "fieldArray", "connector"],
     theme: "white",
     href: "/commercial",
@@ -107,18 +107,19 @@ export const HOW_IT_WORKS = [
 
 /** Findings written as sentences (home evidence band). */
 export const FINDINGS = [
-  "Across 3,000 Monte Carlo runs the station's IRR stays between 12.71% and 16.96%.",
-  "Even the 95% lower bound of NPV, $6,405, stays above zero.",
+  "Across 3,000 Monte Carlo runs the station's IRR stays between 10.6% and 16.5%.",
+  "The rebuilt NPV of $5,963 stays positive in 97.2% of the runs.",
+  "Without paid export, a 100 kWp hub returns more than 300 kWp; spare swap packs lift the solar share to 83%.",
   "Formal battery recovery cuts lifecycle emissions by 8,793 kgCO₂eq, or 26.8%.",
   "Each kWh delivered carries 0.0558 kgCO₂eq, 11.1 times less than the national grid.",
-  "The station repays its manufacturing carbon in 1.5 to 2 years.",
+  "The station repays its lifecycle carbon in 1.5 to 2.1 years on delivered energy.",
   "Over its lifecycle it emits 7,764 kg CO₂eq, against 21,510 kg a year from coal for the same energy.",
 ];
 
 export const FAQ = [
   {
     q: "Where do the numbers come from?",
-    a: "Station performance and economics come from PVsyst simulation of the 18 kWp design, tested over 3,000 Monte Carlo iterations. Environmental results come from an OpenLCA model using ReCiPe 2016 Midpoint (H) over 30,000 iterations. The 300 kWp figures come from the commercial proposal and are pre-feasibility estimates.",
+    a: "Station performance comes from the simulation of the 18 kWp design (Case A), and its 20-year cash flow was rebuilt year by year and tested over 3,000 Monte Carlo iterations. The 98.4 kWp Satkhira figures (Case B) come from a PVsyst 7.4.8 simulation. Environmental results come from an OpenLCA model using ReCiPe 2016 Midpoint (H) over 30,000 iterations. The 300 kWp hub figures (Case C) come from an hourly screening model and are pre-feasibility estimates.",
   },
   {
     q: "Why Easy Bikes and not cars?",
@@ -126,7 +127,7 @@ export const FAQ = [
   },
   {
     q: "Is the station off-grid or grid-tied?",
-    a: "The thesis evaluates the station as an off-grid baseline (LCOE $0.17/kWh, payback about 9 years). The recommended deployment is the same station net-metered, which removes the daytime spillage and brings payback to 5.5–6 years.",
+    a: "The thesis evaluates the station as an off-grid baseline (LCOE $0.20/kWh, simple payback 6 years, discounted payback 12 years). The recommended deployment is the same station net-metered, which removes the daytime spillage and brings payback to 5.5–6 years.",
   },
   {
     q: "Was anything built?",
@@ -134,7 +135,7 @@ export const FAQ = [
   },
   {
     q: "Are the commercial returns guaranteed?",
-    a: "No. The 300 kWp payback of 3.16 years assumes all 100 points are used every day. The proposal itself notes payback can stretch to 5–10 years at lower use. A bankable study needs a site survey and measured load.",
+    a: "No. The 3.16-year payback assumes all 100 points are used every day and is not discounted. The hourly screening gives a discounted payback of 6.2 years at 80% use with two-shift charging, and break-even at about 49% use. A bankable study needs a site survey and measured load.",
   },
   {
     q: "How do I cite this work?",
@@ -157,15 +158,15 @@ export const STATION_SPECS = [
 
 export const ECONOMICS = [
   { k: "Energy selling price", v: "0.23 USD/kWh" },
-  { k: "Annual revenue", v: "5,975 USD" },
+  { k: "Annual revenue", v: "5,497 USD" },
   { k: "O&M cost", v: "1,570 USD/yr" },
-  { k: "Net annual profit", v: "4,405 USD" },
+  { k: "Net annual profit", v: "3,927 USD" },
   { k: "Total investment", v: "≈ 23,670 USD" },
-  { k: "LCOE", v: "0.17 USD/kWh" },
-  { k: "NPV", v: "14,024.42 USD" },
-  { k: "IRR", v: "14.87%" },
-  { k: "ROI", v: "88.66%" },
-  { k: "Payback", v: "9 years" },
+  { k: "LCOE", v: "0.20 USD/kWh" },
+  { k: "NPV", v: "5,963 USD" },
+  { k: "IRR", v: "13.8%" },
+  { k: "ROI", v: "185%" },
+  { k: "Payback", v: "6.0 yr simple, 12.0 yr discounted" },
 ];
 
 export const NET_METERED = [
@@ -179,11 +180,11 @@ export const MONTE_CARLO = {
   iterations: 3000,
   inputs: ["O&M cost", "discount rate", "degradation rate", "electricity tariff"],
   metrics: [
-    { key: "npv", label: "NPV", mean: 14328.95, lo: 6405.4, hi: 23798.38, fmt: "usd" },
-    { key: "irr", label: "IRR", mean: 14.87, lo: 12.71, hi: 16.96, fmt: "pct" },
-    { key: "roi", label: "ROI", mean: 89.0, lo: 69.82, hi: 109.77, fmt: "pct" },
-    { key: "lcoe", label: "LCOE", mean: 0.1704, lo: 0.1487, hi: 0.1925, fmt: "usdkwh" },
-    { key: "payback", label: "Payback", mean: 8.87, lo: 8, hi: 10, fmt: "yrs" },
+    { key: "npv", label: "NPV", mean: 5903.75, lo: -193.28, hi: 12983.08, fmt: "usd" },
+    { key: "irr", label: "IRR", mean: 13.62, lo: 10.55, hi: 16.52, fmt: "pct" },
+    { key: "roi", label: "ROI", mean: 180.99, lo: 133.86, hi: 229.08, fmt: "pct" },
+    { key: "lcoe", label: "LCOE", mean: 0.2007, lo: 0.1836, hi: 0.2183, fmt: "usdkwh" },
+    { key: "payback", label: "Discounted payback", mean: 12.18, lo: 7.76, hi: 18.15, fmt: "yrs" },
   ],
 } as const;
 
@@ -251,7 +252,7 @@ export const MODEL_A = {
     { k: "Transformer", v: "400–500 kVA, preliminary" },
     { k: "Charging points", v: "100, in two zones of 50" },
     { k: "Daily demand", v: "1,000 kWh (10 kWh per bike)" },
-    { k: "Solar yield", v: "1,100–1,500 kWh/day, indicative" },
+    { k: "Solar yield", v: "≈ 1,150 kWh/day screened (962–1,397 by month)" },
     { k: "Delivery", v: "30–60 days after site readiness" },
   ],
   money: [
@@ -259,8 +260,9 @@ export const MODEL_A = {
     { k: "Gross revenue", v: "BDT 91.25 lakh/yr" },
     { k: "Operating cost", v: "BDT 19.50 lakh/yr" },
     { k: "Net operating profit", v: "BDT 71.75 lakh/yr" },
-    { k: "Simple payback", v: "3.16 years" },
-    { k: "10-year ROI", v: "≈ 216%" },
+    { k: "Simple payback", v: "3.16 years at full use" },
+    { k: "Discounted payback", v: "6.2 years at 80% use" },
+    { k: "Break-even use", v: "≈ 49%" },
   ],
 };
 
@@ -279,7 +281,7 @@ export const MODEL_B = {
     { k: "CAPEX", v: "BDT 18–26 lakh" },
     { k: "CAPEX (USD)", v: "$15.6K–$23.6K" },
     { k: "LCOE", v: "$0.0768/kWh (≈ BDT 7.15)" },
-    { k: "Net annual profit", v: "$4,405" },
+    { k: "Net annual profit", v: "$3,927 (off-grid baseline)" },
     { k: "Payback", v: "5.5–6 years" },
   ],
 };
@@ -309,11 +311,11 @@ export const COMPARE = [
     key: "payback",
     label: "Payback",
     unit: "years",
-    a: [3.16, 3.16],
+    a: [4.4, 6.2],
     b: [5.5, 6],
-    aText: "3.16 years at full use",
+    aText: "6.2 years discounted at 80% use",
     bText: "5.5–6 years",
-    note: "The 3.16-year figure assumes every one of 100 points is used daily. At lower use the proposal expects 5–10 years.",
+    note: "The proposal's 3.16 years assumed full use with no discounting. The hourly screening gives 4.4 years simple and 6.2 years discounted at 80% use with two-shift charging.",
   },
   {
     key: "perkwp",

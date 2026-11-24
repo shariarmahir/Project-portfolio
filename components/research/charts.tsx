@@ -8,7 +8,7 @@ type Metric = (typeof MONTE_CARLO.metrics)[number];
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 function fmt(m: Metric, v: number) {
-  if (m.fmt === "usd") return `$${v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  if (m.fmt === "usd") return `${v < 0 ? "−" : ""}$${Math.abs(v).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   if (m.fmt === "pct") return `${v.toFixed(2)}%`;
   if (m.fmt === "usdkwh") return `$${v.toFixed(4)}/kWh`;
   return `${v.toFixed(2)} yrs`;

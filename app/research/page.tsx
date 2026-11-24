@@ -173,7 +173,7 @@ export default function ResearchPage() {
         <p className="lead mt-4">
           Cradle-to-grave, ReCiPe 2016 Midpoint (H), ten impact categories and
           two end-of-life routes, propagated over 30,000 iterations. Carbon
-          payback falls between 1.5 and 2.0 years, and each delivered kWh
+          payback falls between 1.5 and 2.1 years, and each delivered kWh
           carries 0.0558 kgCO₂eq, 11.1 times below the national grid factor.
         </p>
         <div className="mt-8 lg:mt-10">

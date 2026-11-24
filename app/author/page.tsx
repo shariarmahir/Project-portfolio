@@ -35,12 +35,12 @@ const TOOLKIT = [
   },
   {
     tool: "PVsyst",
-    did: "Yield and cash flow for the Farmgate site over 20 years: 23.9 MWh a year, PR about 84%, LCOE 0.17 USD/kWh.",
+    did: "Yield and cash flow for the Farmgate site over 20 years: 23.9 MWh a year, PR about 84%, LCOE 0.20 USD/kWh after the cash-flow rebuild.",
     tone: "white",
   },
   {
     tool: "Monte Carlo methods",
-    did: "3,000 runs on NPV, IRR and ROI. Mean NPV came to USD 14,329 and mean IRR to 14.87%.",
+    did: "3,000 runs on NPV, IRR and payback. Mean NPV came to USD 5,904 and mean IRR to 13.6%, with NPV positive in 97.2% of runs.",
     tone: "tint",
   },
   {

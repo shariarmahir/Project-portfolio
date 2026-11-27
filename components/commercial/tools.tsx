@@ -14,7 +14,7 @@ export function CompareModels() {
   const c = COMPARE.find((x) => x.key === key)!;
   const max = Math.max(c.a[1], c.b[1]) * 1.05;
   const rows = [
-    { label: "300 kWp hub", r: c.a, text: c.aText, cls: "bg-navy" },
+    { label: "250 kWp hub", r: c.a, text: c.aText, cls: "bg-navy" },
     { label: "20 kW net-metered hub", r: c.b, text: c.bText, cls: "bg-helios" },
   ];
   return (
@@ -77,14 +77,16 @@ function Readout({ items }: { items: { k: string; v: string }[] }) {
 }
 
 export function UtilizationTool() {
-  const [u, setU] = React.useState(100);
+  const [u, setU] = React.useState(80);
   const revenue = (100 * (u / 100) * 250 * 365) / 1e5;
-  const profit = revenue - 19.5;
-  const payback = profit > 0 ? 227 / profit : Infinity;
+  // grid energy from the hourly model (two-shift charging with the ESS): 42.2 MWh at 60% use, 115.2 MWh at 100%
+  const gridMWh = Math.max(0, 42.2 + ((u / 100 - 0.6) * (115.2 - 42.2)) / 0.4);
+  const profit = revenue - 3.88 - (gridMWh * 1000 * 11.36) / 1e5;
+  const payback = profit > 0 ? 165.15 / profit : Infinity;
   return (
     <div className="rounded-panel bg-white p-6 ring-1 ring-line sm:p-10">
       <h3 className="text-2xl tracking-display">If fewer bikes turn up</h3>
-      <p className="mt-2 text-[15px]">300 kWp hub, BDT 250 a charge, operating cost held at BDT 19.5 lakh a year as in the proposal.</p>
+      <p className="mt-2 text-[15px]">250 kWp plant with its ESS, two-shift charging, BDT 250 a charge, BDT 1.65 crore invested; grid energy from the hourly model.</p>
       <div className="mt-8 flex items-baseline justify-between">
         <span className="font-semibold text-ink">Points used each day</span>
         <span className="num text-2xl font-semibold text-cobalt">{u}%</span>
@@ -94,7 +96,7 @@ export function UtilizationTool() {
         items={[
           { k: "Revenue", v: `${fmtNumber(revenue, 1)} L` },
           { k: "Net profit", v: `${fmtNumber(profit, 1)} L` },
-          { k: "Payback", v: Number.isFinite(payback) ? `${fmtNumber(payback, 1)} yrs` : "never" },
+          { k: "Simple payback", v: Number.isFinite(payback) ? `${fmtNumber(payback, 1)} yrs` : "never" },
         ]}
       />
     </div>
@@ -103,12 +105,12 @@ export function UtilizationTool() {
 
 export function BudgetTool() {
   const [b, setB] = React.useState(5);
-  const a = Math.floor(b / 2.27);
+  const a = Math.floor(b / 1.6515);
   const n = Math.floor((b * 100) / 22);
   return (
     <div className="rounded-panel bg-white p-6 ring-1 ring-line sm:p-10">
       <h3 className="text-2xl tracking-display">What a budget builds</h3>
-      <p className="mt-2 text-[15px]">BDT 2.27 crore per 300 kWp hub against a BDT 22 lakh midpoint per net-metered hub.</p>
+      <p className="mt-2 text-[15px]">BDT 1.65 crore per 250 kWp hub (plant at its real contract price) against a BDT 22 lakh midpoint per net-metered hub.</p>
       <div className="mt-8 flex items-baseline justify-between">
         <span className="font-semibold text-ink">Budget</span>
         <span className="num text-2xl font-semibold text-cobalt">BDT {b.toFixed(1)} crore</span>
@@ -116,9 +118,9 @@ export function BudgetTool() {
       <Slider label="Budget in crore" value={[b]} min={0.5} max={20} step={0.5} onValueChange={(v) => setB(v[0])} />
       <Readout
         items={[
-          { k: "300 kWp hubs", v: String(a) },
+          { k: "250 kWp hubs", v: String(a) },
           { k: "Net-metered hubs", v: String(n) },
-          { k: "Extra kWp (net-metered)", v: fmtNumber(n * 20 - a * 300.08, 0) },
+          { k: "Extra kWp (net-metered)", v: fmtNumber(n * 20 - a * 250.48, 0) },
         ]}
       />
     </div>
@@ -127,18 +129,18 @@ export function BudgetTool() {
 
 function TenYear() {
   const reduce = useReducedMotion();
-  const max = 760;
+  const max = 640;
   return (
     <div>
-      <p className="text-[15px]">Cumulative net operating profit, BDT lakh, constant assumptions. The line marks the BDT 227 lakh investment.</p>
+      <p className="text-[15px]">Cumulative net cash flow, BDT lakh, two-shift charging at 80% use with costs rising 5% a year. The line marks the BDT 165 lakh investment.</p>
       <div className="relative mt-10 flex h-72 items-end gap-2 sm:gap-4">
-        <div className="absolute inset-x-0 border-t-2 border-dashed border-helios" style={{ bottom: `${(227 / max) * 100}%` }}>
+        <div className="absolute inset-x-0 border-t-2 border-dashed border-helios" style={{ bottom: `${(165.15 / max) * 100}%` }}>
           <span className="absolute -top-7 right-0 text-[13px] font-semibold text-helios-600">Investment recovered</span>
         </div>
         {TEN_YEAR.map((d, i) => (
           <div key={d.year} className="flex h-full flex-1 flex-col items-center justify-end">
             <motion.div
-              className={cn("w-full rounded-t-xl", d.cumulative >= 227 ? "bg-navy" : "bg-cobalt-300")}
+              className={cn("w-full rounded-t-xl", d.cumulative >= 165.15 ? "bg-navy" : "bg-cobalt-300")}
               initial={reduce ? false : { height: 0 }}
               whileInView={{ height: `${(d.cumulative / max) * 100}%` }}
               viewport={{ once: true }}
@@ -151,9 +153,9 @@ function TenYear() {
       </div>
       <dl className="mt-10 grid gap-6 border-t border-line pt-6 sm:grid-cols-3">
         {[
-          ["Five-year surplus", "BDT 1.32 crore"],
-          ["Ten-year surplus", "BDT 4.91 crore"],
-          ["Ten-year simple ROI", "≈ 216%"],
+          ["Five-year surplus", "BDT 1.33 crore"],
+          ["Ten-year surplus", "BDT 4.21 crore"],
+          ["Ten-year simple ROI", "≈ 255%"],
         ].map(([k, v]) => (
           <div key={k}>
             <dt className="text-[13px] text-muted">{k}</dt>
@@ -169,7 +171,7 @@ export function HubDossier() {
   const total = OPEX.reduce((s, o) => s + o.v, 0);
   return (
     <Tabs defaultValue="roi">
-      <TabsList aria-label="300 kWp hub details">
+      <TabsList aria-label="250 kWp hub details">
         <TabsTrigger value="roi">Ten-year return</TabsTrigger>
         <TabsTrigger value="opex">Running cost</TabsTrigger>
         <TabsTrigger value="ems">Energy management</TabsTrigger>
@@ -181,7 +183,7 @@ export function HubDossier() {
           <TenYear />
         </TabsContent>
         <TabsContent value="opex" className="mt-0">
-          <p className="text-[15px]">Annual operating cost of BDT {total.toFixed(2)} lakh against BDT 91.25 lakh gross revenue (100 bikes × BDT 250 × 365 days).</p>
+          <p className="text-[15px]">First-year operating cost of BDT {total.toFixed(2)} lakh against BDT 73 lakh gross revenue (80 bikes × BDT 250 × 365 days), with two-shift charging.</p>
           <ul className="mt-8 space-y-6">
             {OPEX.map((o, i) => (
               <li key={o.k}>
@@ -198,7 +200,7 @@ export function HubDossier() {
         </TabsContent>
         <TabsContent value="ems" className="mt-0">
           <p className="measure text-[15px]">
-            300 kWp array → DC isolators and combiners → six 50 kW inverters → main AC bus and grid → LT panel with EMS → Zone A (50 points) and Zone B (50 points).
+            250.48 kWp array → five 50 kW on-grid inverters → LV AC bus with the 100 kW ESS → net meter and 250 kVA substation → LT panel with EMS → Zone A (50 points) and Zone B (50 points).
           </p>
           <ol className="mt-8 grid gap-x-10 sm:grid-cols-2">
             {EMS.map((e, i) => (
@@ -221,7 +223,7 @@ export function HubDossier() {
           </ol>
         </TabsContent>
         <TabsContent value="schedule" className="mt-0">
-          <p className="text-[15px]">Overall delivery: about 30–60 days after the site is ready, with overlapping work packages.</p>
+          <p className="text-[15px]">The plant, the ESS and the substation are already in place, so the hub needs about six months from approval to the pilot.</p>
           <ol className="mt-6">
             {SCHEDULE.map((s) => (
               <li key={s.k} className="spec-row">

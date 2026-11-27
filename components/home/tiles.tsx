@@ -34,7 +34,7 @@ export function KeyTiles({ docs }: { docs: GateDoc[] }) {
         />
         <span className="absolute inset-0 bg-gradient-to-t from-navy via-navy/55 to-navy/0" />
         <span className={`relative ${tileTitle} text-white`}>The commercial case</span>
-        <span className="relative mt-3 max-w-[30ch] text-[15px] text-white/80">A 300 kWp depot hub or a 20 kW net-metered neighbourhood hub.</span>
+        <span className="relative mt-3 max-w-[30ch] text-[15px] text-white/80">A 100-bike hub on a real 250 kWp plant, or a 20 kW net-metered neighbourhood hub.</span>
         <span className="relative mt-5 inline-flex items-center gap-2 font-semibold text-helios">
           Compare the models <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
         </span>

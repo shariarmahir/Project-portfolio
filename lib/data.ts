@@ -88,13 +88,13 @@ export const SYSTEMS = [
   },
   {
     key: "megahub",
-    title: "300 kWp hub for 100 Easy Bikes",
-    body: "A depot-scale plant: 484 Tier-1 modules, six 50 kW inverters and a smart energy management system that splits 100 metered charging points across two zones.",
-    points: ["CAPEX BDT 2.27 crore, built in 100 kWp blocks", "Discounted payback 6.2 years at 80% use (two-shift)", "Break-even at about 49% utilisation"],
+    title: "250 kWp plant and a 100-bike hub",
+    body: "A real plant commissioned in Satkhira in September 2026: 404 JINKO modules, five 50 kW inverters and a 100 kW energy storage system, supplying a hub of 100 metered charging points in two zones.",
+    points: ["Plant contract BDT 1.26 crore, Tk 35.30 per watt", "Hub payback 2.7 years at 80% use (two-shift)", "Break-even at about 30% utilisation"],
     images: ["farmAerial", "fieldArray", "connector"],
     theme: "white",
     href: "/commercial",
-    cta: "See the 300 kWp model",
+    cta: "See the 250 kWp model",
   },
 ] as const;
 
@@ -109,7 +109,7 @@ export const HOW_IT_WORKS = [
 export const FINDINGS = [
   "Across 3,000 Monte Carlo runs the station's IRR stays between 10.6% and 16.5%.",
   "The rebuilt NPV of $5,963 stays positive in 97.2% of the runs.",
-  "Without paid export, a 100 kWp hub returns more than 300 kWp; spare swap packs lift the solar share to 83%.",
+  "A real 250 kWp plant cost Tk 35.30 per watt, 44% below planning prices, and its energy costs Tk 3.7–5.4 per kWh.",
   "Formal battery recovery cuts lifecycle emissions by 8,793 kgCO₂eq, or 26.8%.",
   "Each kWh delivered carries 0.0558 kgCO₂eq, 11.1 times less than the national grid.",
   "The station repays its lifecycle carbon in 1.5 to 2.1 years on delivered energy.",
@@ -119,7 +119,7 @@ export const FINDINGS = [
 export const FAQ = [
   {
     q: "Where do the numbers come from?",
-    a: "Station performance comes from the simulation of the 18 kWp design (Case A), and its 20-year cash flow was rebuilt year by year and tested over 3,000 Monte Carlo iterations. The 98.4 kWp Satkhira figures (Case B) come from a PVsyst 7.4.8 simulation. Environmental results come from an OpenLCA model using ReCiPe 2016 Midpoint (H) over 30,000 iterations. The 300 kWp hub figures (Case C) come from an hourly screening model and are pre-feasibility estimates.",
+    a: "Station performance comes from the simulation of the 18 kWp design (Case A), and its 20-year cash flow was rebuilt year by year and tested over 3,000 Monte Carlo iterations. The 98.4 kWp Satkhira figures (Case B) come from a PVsyst 7.4.8 simulation. Environmental results come from an OpenLCA model using ReCiPe 2016 Midpoint (H) over 30,000 iterations. The 250 kWp plant (Case C) is real: its configuration and price come from the signed EPC agreement and the completion certificate, while its yield and the 100-bike hub results come from an hourly screening model checked against PVsyst.",
   },
   {
     q: "Why Easy Bikes and not cars?",
@@ -131,11 +131,11 @@ export const FAQ = [
   },
   {
     q: "Was anything built?",
-    a: "Yes. A 30 W laboratory prototype with an ESP32, a MAX17043 fuel gauge, ACS712 and DS18B20 sensors and a SIM800L uplink validated the control logic and telemetry during a 72-hour bench run.",
+    a: "Yes. A 30 W laboratory prototype with an ESP32, a MAX17043 fuel gauge, ACS712 and DS18B20 sensors and a SIM800L uplink validated the control logic and telemetry during a 72-hour bench run. The 250.48 kWp plant of Case C was built and commissioned in Satkhira on 9 September 2026.",
   },
   {
     q: "Are the commercial returns guaranteed?",
-    a: "No. The 3.16-year payback assumes all 100 points are used every day and is not discounted. The hourly screening gives a discounted payback of 6.2 years at 80% use with two-shift charging, and break-even at about 49% use. A bankable study needs a site survey and measured load.",
+    a: "No. With two-shift charging at 80% use the hub pays back in 2.7 years simple and 3.4 years discounted, and breaks even at about 30% use. These figures assume a flat fee of BDT 250 per charge, which must be confirmed under the national charging guideline: if only the BERC rate could be billed, the hub would not pay back at a 10% discount rate. A bankable study also needs a year of measured plant data and measured charger load.",
   },
   {
     q: "How do I cite this work?",
@@ -242,27 +242,27 @@ export const METHOD = [
 /* ------------------------------ Commercial data ----------------------------- */
 
 export const MODEL_A = {
-  name: "300 kWp hub",
-  sub: "100 Easy Bikes, one depot",
-  bestFor: "Bus terminals, transit depots and dense urban operators with land and a transformer to spare.",
+  name: "250 kWp hub",
+  sub: "A real plant, 100 Easy Bikes",
+  bestFor: "Markets, warehouses and depots with a large roof, a grid connection and drivers who can charge between shifts.",
   system: [
-    { k: "PV array", v: "300.08 kWp" },
-    { k: "Modules", v: "484 × 620 Wp Tier-1" },
-    { k: "Inverters", v: "6 × 50 kW (or 3 × 100 kW)" },
-    { k: "Transformer", v: "400–500 kVA, preliminary" },
+    { k: "PV array", v: "250.48 kWp, built 9 Sep 2026" },
+    { k: "Modules", v: "404 × JINKO 620 Wp" },
+    { k: "Inverters", v: "5 × Solis 50 kW on-grid" },
+    { k: "Storage", v: "100 kW hybrid ESS (215 kWh assumed)" },
+    { k: "Substation", v: "250 kVA; load peak 211 kVA" },
     { k: "Charging points", v: "100, in two zones of 50" },
     { k: "Daily demand", v: "1,000 kWh (10 kWh per bike)" },
-    { k: "Solar yield", v: "≈ 1,150 kWh/day screened (962–1,397 by month)" },
-    { k: "Delivery", v: "30–60 days after site readiness" },
+    { k: "Solar yield", v: "≈ 960 kWh/day (803–1,166 by month)" },
   ],
   money: [
-    { k: "CAPEX", v: "BDT 2.27 crore" },
-    { k: "Gross revenue", v: "BDT 91.25 lakh/yr" },
-    { k: "Operating cost", v: "BDT 19.50 lakh/yr" },
-    { k: "Net operating profit", v: "BDT 71.75 lakh/yr" },
-    { k: "Simple payback", v: "3.16 years at full use" },
-    { k: "Discounted payback", v: "6.2 years at 80% use" },
-    { k: "Break-even use", v: "≈ 49%" },
+    { k: "Plant (contract)", v: "BDT 1.2575 crore" },
+    { k: "Total hub investment", v: "BDT 1.65 crore" },
+    { k: "Revenue at 80% use", v: "BDT 73 lakh/yr" },
+    { k: "Grid energy (two-shift)", v: "BDT 8.9 lakh/yr" },
+    { k: "Net cash flow, year 1", v: "BDT 60.2 lakh" },
+    { k: "Payback at 80% use", v: "2.7 yr simple, 3.4 yr discounted" },
+    { k: "Break-even use", v: "≈ 30%" },
   ],
 };
 
@@ -291,51 +291,50 @@ export const COMPARE = [
     key: "capex",
     label: "Capital cost",
     unit: "BDT lakh",
-    a: [227, 227],
+    a: [165.15, 165.15],
     b: [18, 26],
-    aText: "BDT 227 lakh",
+    aText: "BDT 165 lakh",
     bText: "BDT 18–26 lakh",
-    note: "The capital for one 300 kWp hub builds nine to twelve net-metered hubs.",
+    note: "The capital for one 250 kWp hub, plant included, builds six to nine net-metered hubs.",
   },
   {
     key: "lcoe",
     label: "Energy cost",
     unit: "BDT per kWh",
-    a: [7.7, 7.7],
+    a: [3.72, 5.4],
     b: [7.15, 7.15],
-    aText: "Grid backup at BDT 7.70",
+    aText: "BDT 3.72–5.40",
     bText: "BDT 7.15",
-    note: "The net-metered hub generates below the BERC tariff; the mega-hub buys its backup energy at it.",
+    note: "At its real contract price the 250 kWp plant generates at Tk 3.72 per kWh for the PV and Tk 5.40 with its ESS, below both the small hub and the BERC tariff of Tk 11.36.",
   },
   {
     key: "payback",
     label: "Payback",
     unit: "years",
-    a: [4.4, 6.2],
+    a: [2.7, 3.4],
     b: [5.5, 6],
-    aText: "6.2 years discounted at 80% use",
+    aText: "2.7–3.4 years at 80% use",
     bText: "5.5–6 years",
-    note: "The proposal's 3.16 years assumed full use with no discounting. The hourly screening gives 4.4 years simple and 6.2 years discounted at 80% use with two-shift charging.",
+    note: "Two-shift charging at 80% use: 2.7 years simple and 3.4 years discounted. The hub assumes a flat fee of BDT 250 per charge, which still needs regulatory confirmation.",
   },
   {
     key: "perkwp",
     label: "Cost per kWp",
     unit: "BDT lakh per kWp",
-    a: [0.757, 0.757],
+    a: [0.502, 0.659],
     b: [0.9, 1.3],
-    aText: "0.76 lakh",
+    aText: "0.50–0.66 lakh",
     bText: "0.90–1.30 lakh",
-    note: "Scale makes the mega-hub cheaper per kWp; the distributed hub wins on land, approvals and speed.",
+    note: "The plant cost Tk 50,204 per kWp under a real contract, and the whole hub with chargers Tk 65,933. The small hub wins on land, approvals and speed.",
   },
 ] as const;
 
-export const TEN_YEAR = Array.from({ length: 10 }, (_, i) => ({ year: i + 1, cumulative: +(71.75 * (i + 1)).toFixed(2) }));
+export const TEN_YEAR = [60.18, 120.04, 179.58, 238.79, 297.65, 356.16, 414.31, 472.07, 529.45, 586.42].map((v, i) => ({ year: i + 1, cumulative: v }));
 
 export const OPEX = [
-  { k: "Grid electricity and backup", v: 15.0 },
-  { k: "Staff and management", v: 2.5 },
-  { k: "Maintenance", v: 1.0 },
-  { k: "Miscellaneous", v: 1.0 },
+  { k: "Grid electricity (two-shift, 78.7 MWh)", v: 8.94 },
+  { k: "Staff and maintenance, charging side", v: 2.62 },
+  { k: "Plant O&M (1% of equipment)", v: 1.25 },
 ];
 
 export const EMS = [
@@ -346,25 +345,23 @@ export const EMS = [
   "Limit load during peak-demand hours",
   "Meter every charging point and the main incomer",
   "Log operating data and alarms",
-  "Leave room for battery storage later",
+  "Dispatch the 100 kW ESS after sunset",
 ];
 
 export const BESS = [
-  { phase: "Phase 1", storage: "No battery", purpose: "Solar and grid charging, 100 points, EMS" },
-  { phase: "Phase 2", storage: "200 kWh", purpose: "Peak shaving and some evening support" },
-  { phase: "Phase 3", storage: "500 kWh", purpose: "More energy shifting and demand control" },
-  { phase: "Later", storage: "Up to 1 MWh", purpose: "After load and financial review" },
+  { phase: "In place", storage: "100 kW ESS", purpose: "Evening supply, peak cut and backup during outages" },
+  { phase: "Pilot", storage: "20 swap packs", purpose: "Test driver acceptance and get a firm pack price" },
+  { phase: "Grid", storage: "Net metering", purpose: "The grid as the store: NPV rises to BDT 4.33 crore" },
+  { phase: "Later", storage: "More packs", purpose: "Only if packs reach about Tk 17,000 per kWh, near the ESS price" },
 ];
 
 export const SCHEDULE = [
-  { k: "Site survey and preliminary engineering", d: "7–10 days" },
-  { k: "Detailed design and approvals", d: "≈ 7 days" },
-  { k: "Material procurement", d: "15–30 days" },
-  { k: "Mounting structures", d: "15–20 days" },
-  { k: "Solar modules", d: "10–15 days" },
-  { k: "Electrical installation", d: "10–15 days" },
-  { k: "Charging infrastructure", d: "10–15 days" },
-  { k: "Testing and commissioning", d: "3–5 days" },
+  { k: "Fee confirmation and ESS datasheet", d: "Month 1" },
+  { k: "Measure bikes, chargers and driver schedules", d: "Months 1–2" },
+  { k: "Hub design, protection and EMS rules", d: "Months 2–3" },
+  { k: "Procurement and installation", d: "Months 4–5" },
+  { k: "Commissioning and 20-bike pilot", d: "Month 6" },
+  { k: "Ramp-up to 100 bikes with monitoring", d: "Months 7–12" },
 ];
 
 /* ---------------------------------- Author ---------------------------------- */

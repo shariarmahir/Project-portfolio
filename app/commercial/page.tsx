@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Commercial",
-  description: "Two deployment models for solar Easy Bike charging in Bangladesh: a 300 kWp depot hub and a 20 kW net-metered neighbourhood hub.",
+  description: "Two deployment models for solar Easy Bike charging in Bangladesh: a 100-bike hub on a real 250 kWp plant and a 20 kW net-metered neighbourhood hub.",
 };
 
 function ModelPanel({
@@ -66,7 +66,7 @@ export default function CommercialPage() {
     <>
       <PageIntro
         title="Two ways to put the research to work"
-        lead="A depot-scale hub for 100 bikes, or a small net-metered hub that can be repeated across neighbourhoods. The figures come from the commercial proposal and the thesis, and they are pre-feasibility estimates."
+        lead="A 100-bike hub on a real 250 kWp plant, or a small net-metered hub that can be repeated across neighbourhoods. The plant and its price are real; the hub figures are calculated estimates from the thesis and the commercial proposal."
       >
         <Button asChild variant="primary">
           <a href={AUDIT_HREF}>
@@ -78,7 +78,7 @@ export default function CommercialPage() {
       <SectionNav
           items={[
             { id: "neighbourhood", label: "20 kW hub" },
-            { id: "depot", label: "300 kWp hub" },
+            { id: "depot", label: "250 kWp hub" },
             { id: "compare", label: "Compare" },
             { id: "dossier", label: "Inside the hub" },
           ]}
@@ -106,7 +106,7 @@ export default function CommercialPage() {
 
       <section aria-labelledby="dossier" className="container pb-[clamp(3.5rem,6vw,5.5rem)]">
         <h2 id="dossier" className="h2">
-          Inside the 300 kWp hub
+          Inside the 250 kWp hub
         </h2>
         <p className="lead mt-4">
           The proposal splits 100 metered points into two zones behind a smart energy management system, with room for storage later.

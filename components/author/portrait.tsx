@@ -1,31 +1,34 @@
 import Image from "next/image";
-import { Bolt } from "@/components/site/marks";
+import { LogoMark } from "@/components/site/marks";
 import { authorPhoto } from "@/lib/author-photo";
 import { AUTHOR } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
-/** Author portrait: the real photo when one is supplied, otherwise a designed monogram. */
-export function AuthorPortrait({ className, sizes = "(min-width:1024px) 40vw, 100vw", priority }: { className?: string; sizes?: string; priority?: boolean }) {
+/**
+ * Author portrait in a yellow duotone, as in the resume layout. Drop the portrait at
+ * public/images/author.jpg (or .png / .webp) and it replaces the monogram automatically.
+ */
+export function AuthorPortrait({ className, sizes = "(min-width:1024px) 30vw, 100vw", priority }: { className?: string; sizes?: string; priority?: boolean }) {
   const src = authorPhoto();
   const initials = AUTHOR.name
     .split(" ")
     .map((w) => w[0])
     .join("");
   return (
-    <div className={cn("relative overflow-hidden bg-cobalt", className)}>
+    <div className={cn("relative overflow-hidden bg-navy-900", className)}>
       {src ? (
-        <Image src={src} alt={`Portrait of ${AUTHOR.name}`} fill sizes={sizes} priority={priority} className="object-cover object-top" />
+        <>
+          <Image src={src} alt={`Portrait of ${AUTHOR.name}`} fill sizes={sizes} priority={priority} className="object-cover object-top contrast-[1.08] grayscale" />
+          {/* yellow duotone, the colour of the resume reference */}
+          <div aria-hidden className="absolute inset-0 bg-[#F6CE48] mix-blend-multiply" />
+        </>
       ) : (
         <div role="img" aria-label={`${AUTHOR.name} monogram`} className="absolute inset-0 grid place-items-center">
-          <svg aria-hidden viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 size-full">
-            <circle cx="330" cy="70" r="150" fill="#2B5CE6" />
-            <circle cx="40" cy="470" r="190" fill="#1A40B0" />
-            <path d="M232 60 118 232h70l-22 208 140-200h-72z" fill="#F59E0B" opacity="0.95" />
-          </svg>
-          <span className="relative font-semibold tracking-display text-white [font-size:clamp(4rem,9vw,7.5rem)] [text-shadow:0_8px_30px_rgba(6,24,43,0.35)]">
-            {initials}
-          </span>
-          <Bolt className="absolute bottom-6 right-6 h-8 w-5 fill-white/90" />
+          <div aria-hidden className="sun-rays absolute left-1/2 top-1/2 size-[160%] -translate-x-1/2 -translate-y-1/2 opacity-90" />
+          <div className="relative flex flex-col items-center">
+            <LogoMark className="size-24 sm:size-28" />
+            <span className="mt-4 font-semibold tracking-display text-white [font-size:clamp(3rem,6vw,4.5rem)]">{initials}</span>
+          </div>
         </div>
       )}
     </div>

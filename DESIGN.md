@@ -1,59 +1,40 @@
 # Design
 
-Visual system for SolarEV BD. Product truth lives in PRODUCT.md.
+Visual system for SolarEV BD. Product truth lives in PRODUCT.md. Every number on the site comes from `lib/thesis-data.ts`, which is generated from the thesis model (`thesis3/export_site.py`), or from `lib/data.ts` where each figure appears in the thesis.
 
-## Direction contract
+## Direction contract (November 2026 redesign, owner-pinned)
 
-- **THESIS:** A charging network's public website, not a research poster. The study is presented with the same calm, confident pattern language a real EV-charging operator uses (GRIDSERVE electric highway as the owner-pinned reference). Refuses the startup-landing default of eyebrow pills, glowing stat cards and gradient emphasis.
-- **OWN-WORLD:** Cool neutral canvas, navy and cobalt colour fields that own whole panels, Helios yellow only on bolt marks and the primary action. One family: Montserrat 600 set tight for display, 400/500 for reading. 24px radii on media and panels, full pills for buttons, white circular carousel arrows.
-- **STORY:** An examiner learns in one viewport what the thesis is (solar charging for Easy Bikes), follows the drawn path through why it matters, the three systems studied and the evidence, and reaches any document in two clicks. A commercial reader can switch to the Commercial view at any time.
-- **FIRST VIEWPORT:** Inset rounded video card (aerial PV array) nearly full width. Centred sentence-case kicker, two-line H1, one sentence, two buttons: primary Helios "Read the research", secondary white "Download the thesis". A bolt node on the card's bottom edge starts the scroll path.
-- **FORM:** Pinned by the owner (gridserve reference), so no roll was run. Staging: scroll-path narrative on Home, stacked overlap panels for the three systems.
+- **WORLD:** "Solar night" glassmorphism. A deep night sky behind frosted glass panels, with one sun-amber accent. The owner pinned the references: glass dashboard cards, a product-launch hero with a giant faded word behind the subject (bike-launch layout), and a resume-style author profile.
+- **SKY:** `components/site/sky.tsx` moves the light with the scroll: dawn at the top, noon in the middle and dusk at the foot of every page. A sun disc with lens-flare ghosts crosses the sky, light motes rise, sunlight follows the pointer over glass (`sun-trail.tsx`) and a beam sweeps each section title once (`title-sweep.tsx`). There is only ever one sun on screen.
+- **HERO:** A live three.js scene (`components/three/solar-scene.ts`, the "hub" view) fills the hero: roof plant, charging canopy, Easy Bikes, ESS, substation and flowing energy. Glass labels are pinned to the 3D objects. Left: the real h1, an amber line, a short body, two calls to action and three counted stats. No carousel, rails, captions or scroll cue. A transparent poster covers the load.
+- **IMAGERY:** No photographs and no credits. Every image is a render of our own 3D world (`public/media/renders`); the inner pages show the same world live in a glass band.
+- **MAP:** Leaflet with Esri dark canvas tiles (English labels); amber pins for the thesis sites, blue for the charging points mapped on OpenStreetMap (`lib/charging-points.ts`).
+- **CARDS:** Cards side by side must end together: stretch lists (`auto-rows-fr`, `justify-between`) or pin a summary to the bottom (`mt-auto`). `qa/cardgap.py` checks it.
+- **FOOTER:** Glass slab with a sunlit top edge, faint giant wordmark and the builder credit in a glowing pill with moving sunlight colour.
+- **MOTION:** Reveal on scroll, count-up numbers, lines that draw themselves, bars that grow, stacked case cards. `MotionConfig reducedMotion="user"` plus `useReduced()` (false until mount) keep reduced-motion users safe and hydration stable.
+- **UNITS:** Never uppercase text that contains units (kWp, kWh, kW).
 
-## Colour (60-30-10)
+## Colour
 
 | Role | Token | Value |
 | --- | --- | --- |
-| Canvas (60%) | `canvas` | #F8FAFC |
-| Surface | `surface` | #FFFFFF |
-| Tint panel | `tint` | #E7EDF5 |
-| Hairline | `line` | #D9E1EC |
-| Ink | `ink` | #0F172A |
-| Body text | `body` | #334155 |
-| Navy field (30%) | `navy` | #0A2540 |
-| Cobalt (30%) | `cobalt` | #1D4ED8 |
-| Helios (10%) | `helios` | #F59E0B |
-| Helios hover | `helios-600` | #D97706 |
+| Canvas | `canvas` | #050B16 |
+| Surface | `surface` | #0B1526 |
+| Tint | `tint` | #0E1A2E |
+| Hairline | `line` | #22324B |
+| Ink | `ink` | #F2F6FC |
+| Body | `body` | #C5D0DF |
+| Muted | `muted` | #8F9FB7 |
+| Sun accent | `helios` / `helios-300` | #F59E0B / #FCD34D |
+| Grid and data | `cobalt` | #4F86F7 |
+| Solar and good results | `leaf` | #34D399 |
 
-Rules: Helios is never used as text on light surfaces (it fails contrast). On light grounds it appears as bolt marks and button fills with navy text. On navy it may be text. Kickers on light grounds are cobalt.
+Glass: `.glass` (light frost), `.glass-strong` (dense panel), defined in `app/globals.css`. Amber buttons carry navy-900 text.
 
 ## Type
 
-- Montserrat via `next/font`. Display weight 600, tracking -0.04em, line-height 1.05. H1 clamp(2.6rem, 6vw, 5rem); H2 clamp(2.2rem, 4.6vw, 4rem); H3 clamp(1.5rem, 2.4vw, 2.25rem).
-- Statement paragraphs: 600, 1.6–1.9rem, tracking -0.02em.
-- Body: 400, 1.0625–1.125rem, line-height 1.6, max 68ch, colour `body`.
-- Numbers use `font-variant-numeric: tabular-nums`. No monospace anywhere except the BibTeX code block.
-- Kickers: sentence case, 600, cobalt (light ground) or helios (navy ground). Used only where a section has a category name, never on every section.
+Montserrat (self-hosted variable font). Display 600 with tight tracking; kickers 13px uppercase with wide tracking in amber; reading text 16-18px.
 
-## Shape & depth
+## Logo
 
-- Radii: media and panels 24px; overlap panels 40px top corners; buttons full pill; inputs 16px.
-- Shadows only on floating controls (carousel arrows, header on scroll): `0 6px 18px -8px rgba(10,37,64,.25)`. Panels are flat colour fields.
-
-## Components
-
-- Buttons: pill, 48px tall, 600. Primary = Helios fill + navy text; Secondary = navy fill + white; Ghost = 1.5px navy outline. Arrow icon trails.
-- Header: canvas background, hairline bottom border, segmented control "Research / Commercial" in a tinted pill, text links, primary action at right.
-- Bolt list: Helios bolt glyph, 600 title, body paragraph, hairline dividers between items.
-- Overlap panels: full-bleed, sticky stacking, alternating tint / navy / white, kicker + H3 + bolt list + image carousel.
-- Tiles: 24px-radius colour blocks (navy, cobalt, tint, photo) with title top-left and arrow bottom-left.
-- Accordion: tint bars, 24px radius, chevron right.
-- Ticker: single line of 600 words separated by bolt marks, slow marquee, paused on reduced motion.
-
-## Motion
-
-One authored moment: the scroll path, a 1.5px line drawn by scroll progress (pathLength) from the hero bolt node through the intro block. Everything else is quiet: content is visible by default, images settle with a short opacity and translate, carousels slide 400ms ease-out. Respect `prefers-reduced-motion` (no path draw, no marquee, videos paused on their poster).
-
-## Imagery
-
-Licensed only: Unsplash (photos, Unsplash License) and Mixkit (video, Mixkit Free License). Bangladeshi scenes are used where verified (Dhaka aerial and street photos). Credits listed in `lib/media.ts` and the footer credits link.
+`components/site/marks.tsx` redraws the supplied animated logo (`public/logo/logo.gif`) as SVG: turning sun, flickering bolts, tilting panels. `tone="dark"` swaps the navy outline for a light one on dark backgrounds.

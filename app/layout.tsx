@@ -2,8 +2,11 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
-import { CreditsTab } from "@/components/site/credits-tab";
 import { SparkScrollbar } from "@/components/site/spark-scrollbar";
+import { SkyBackdrop } from "@/components/site/sky";
+import { MotionProvider } from "@/components/site/motion";
+import { SunTrail } from "@/components/site/sun-trail";
+import { TitleSweep } from "@/components/site/title-sweep";
 import "./globals.css";
 
 // Self-hosted (SIL OFL, see app/fonts/OFL-LICENSE.txt) so the build never depends on
@@ -22,16 +25,16 @@ export const metadata: Metadata = {
   ),
   title: { default: "SolarEV BD | Solar charging for Bangladesh's Easy Bikes", template: "%s | SolarEV BD" },
   description:
-    "Asif Rabbi's MSc thesis on IoT-enabled solar PV battery charging stations for Bangladesh: design, prototype, PVsyst economics, Monte Carlo risk and a ReCiPe 2016 life cycle assessment.",
+    "Asif Rabbi's MSc thesis on solar charging for Bangladesh's Easy Bikes: an IoT-enabled 18 kWp station, a 98.4 kWp Satkhira system and a real 250.48 kWp plant supplying a 100-bike hub, with economics and life cycle assessment.",
   openGraph: {
     title: "SolarEV BD: solar charging for Bangladesh's Easy Bikes",
-    description: "An MSc thesis that designs, builds, prices and life-cycle-tests an IoT solar charging station.",
-    images: ["/media/hero-solar-aerial-poster.jpg"],
+    description: "Three cases, from a 30 W prototype to a real 250 kWp plant and a 100-bike charging hub.",
+    images: ["/media/renders/og.jpg"],
     type: "website",
   },
 };
 
-export const viewport: Viewport = { themeColor: "#F8FAFC", colorScheme: "light" };
+export const viewport: Viewport = { themeColor: "#050B16", colorScheme: "dark" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -39,15 +42,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body suppressHydrationWarning>
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-navy focus:px-5 focus:py-3 focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-helios focus:px-5 focus:py-3 focus:text-navy-900"
         >
           Skip to content
         </a>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
-        <CreditsTab />
-        <SparkScrollbar />
+        <SkyBackdrop />
+        <MotionProvider>
+          <Header />
+          <main id="main">{children}</main>
+          <Footer />
+          <SparkScrollbar />
+          <SunTrail />
+          <TitleSweep />
+        </MotionProvider>
       </body>
     </html>
   );

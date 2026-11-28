@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import path from "node:path";
-import { SITE } from "@/lib/data";
 
 /**
  * Downloads are detected at build time. Drop a file into /public/downloads using
@@ -45,7 +44,7 @@ export const SLOTS: DownloadSlot[] = [
     title: "Thesis draft",
     desc: "The MSc thesis draft in seven chapters: the 18 kWp station and 30 W prototype (Case A), the 98.4 kWp Satkhira PVsyst system (Case B), the real 250 kWp plant and its 100-bike hub (Case C), and a reality lens that reads every system against real prices.",
     base: "thesis-draft",
-    length: "134 pages",
+    length: "130 pages",
     exts: ["pdf", "docx"],
     action: "Download thesis draft",
     group: "thesis",
@@ -55,7 +54,7 @@ export const SLOTS: DownloadSlot[] = [
     title: "Thesis book",
     desc: "The complete bound thesis with all three cases, the reality lens, figures, tables, references and appendices.",
     base: "thesis-book",
-    length: "136 pages",
+    length: "133 pages",
     exts: ["pdf"],
     action: "Download thesis book",
     group: "thesis",
@@ -65,7 +64,7 @@ export const SLOTS: DownloadSlot[] = [
     title: "IEEE publication",
     desc: "Three-case IEEE paper: the IoT-enabled station, the grid-connected Satkhira system and a real 250 kWp plant supplying a 100-bike hub, with economic and environmental analysis.",
     base: "ieee-publication",
-    length: "25 pages",
+    length: "24 pages",
     exts: ["pdf"],
     action: "Download IEEE paper",
     group: "publication",
@@ -85,19 +84,12 @@ export const SLOTS: DownloadSlot[] = [
     title: "Presentation: Bangladesh solar EV blueprint",
     desc: "The animated investor deck for a 100-bike solar charging hub on a real 250 kWp plant: energy, returns, sensitivity, the fee question, storage, impact and roadmap.",
     base: "presentation-solar-ev-blueprint",
-    length: "19 slides",
+    length: "23 slides",
     exts: ["pptx", "pdf"],
     action: "Download PPT",
     group: "publication",
   },
 ];
-
-export const VISIT_LINK = {
-  title: "Research archive",
-  desc: "Simulation files, datasets and working material in the shared research drive.",
-  href: SITE.drive,
-  action: "Visit link",
-};
 
 export type ResolvedDownload = DownloadSlot & { href: string | null; ext: string | null; size: string | null; cover: string };
 

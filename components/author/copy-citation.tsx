@@ -14,12 +14,12 @@ export function CopyCitation({ text }: { text: string }) {
     setTimeout(() => setState("idle"), 2200);
   };
   return (
-    <div className="overflow-hidden rounded-panel bg-navy">
+    <div className="glass-strong overflow-hidden rounded-panel">
       <div className="flex items-center justify-between gap-4 border-b border-white/10 px-6 py-4">
         <span className="text-[15px] font-semibold text-white">BibTeX</span>
         <button
           onClick={copy}
-          className="inline-flex h-10 items-center gap-2 rounded-full bg-helios px-4 text-[14px] font-semibold text-navy transition-colors hover:bg-white"
+          className="inline-flex h-10 items-center gap-2 rounded-full bg-helios px-4 text-[14px] font-semibold text-navy-900 transition-colors hover:bg-helios-300"
         >
           {state === "copied" ? <Check className="size-4" /> : <Copy className="size-4" />}
           {state === "copied" ? "Copied" : state === "failed" ? "Select and copy manually" : "Copy citation"}

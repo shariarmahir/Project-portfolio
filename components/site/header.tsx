@@ -6,8 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Menu, X } from "lucide-react";
 import { Logo } from "@/components/site/marks";
 import { ReferencesDrawer } from "@/components/site/references-drawer";
-import { Button } from "@/components/ui/button";
-import { AUDIT_HREF as auditHref } from "@/lib/data";
+import { DriveButton, DriveGlyph } from "@/components/site/download-gate";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -47,24 +46,19 @@ export function Header() {
   const lit = hover ?? active;
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 transition-[background-color,box-shadow,border-color] duration-500",
-        open ? "z-[75]" : "z-50",
-        open
-          ? "border-b border-line bg-white"
-          : scrolled
-            ? "border-b border-line/70 bg-white/85 shadow-header backdrop-blur-xl"
-            : "border-b border-transparent bg-canvas"
-      )}
-    >
-      <div className={cn("container flex items-center gap-4 transition-[height] duration-500", scrolled ? "h-16" : "h-20")}>
-        <Link href="/" aria-label="SolarEV BD home" className="shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cobalt focus-visible:ring-offset-4">
+    <header className={cn("fixed inset-x-0 top-0 px-3 pt-3 transition-[padding] duration-500 sm:px-5", open ? "z-[75]" : "z-50", scrolled && "pt-2")}>
+      <div
+        className={cn(
+          "mx-auto flex max-w-[1400px] items-center gap-4 rounded-full px-3 pl-4 transition-[height,background-color,box-shadow,border-color] duration-500 sm:pl-5",
+          scrolled || open ? "glass-strong h-16" : "h-[72px] border border-transparent"
+        )}
+      >
+        <Link href="/" aria-label="SolarEV BD home" className="shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-helios-300 focus-visible:ring-offset-4 focus-visible:ring-offset-canvas">
           <Logo />
         </Link>
 
         <nav aria-label="Primary" className="mx-auto hidden lg:block">
-          <ul className="flex items-center gap-1 rounded-full border border-line bg-white/80 p-1" onMouseLeave={() => setHover(null)}>
+          <ul className="glass flex items-center gap-1 rounded-full p-1" onMouseLeave={() => setHover(null)}>
             {NAV.map((n) => {
               const on = lit === n.href;
               return (
@@ -72,7 +66,7 @@ export function Header() {
                   {on && (
                     <motion.span
                       layoutId="nav-pill"
-                      className={cn("absolute inset-0 rounded-full", lit === active ? "bg-navy" : "bg-tint")}
+                      className={cn("absolute inset-0 rounded-full", lit === active ? "bg-helios" : "bg-white/10")}
                       transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 34 }}
                     />
                   )}
@@ -84,7 +78,7 @@ export function Header() {
                     aria-current={active === n.href ? "page" : undefined}
                     className={cn(
                       "relative z-10 block rounded-full px-4 py-2 text-[14.5px] font-semibold transition-colors duration-200 focus-visible:outline-none",
-                      on && lit === active ? "text-white" : "text-ink"
+                      on && lit === active ? "text-navy-900" : "text-ink"
                     )}
                   >
                     {n.label}
@@ -96,7 +90,7 @@ export function Header() {
               <ReferencesDrawer>
                 <button
                   onMouseEnter={() => setHover(null)}
-                  className="block rounded-full px-4 py-2 text-[14.5px] font-semibold text-ink transition-colors hover:text-cobalt focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cobalt"
+                  className="block rounded-full px-4 py-2 text-[14.5px] font-semibold text-ink transition-colors hover:text-helios-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-helios-300"
                 >
                   References
                 </button>
@@ -105,16 +99,23 @@ export function Header() {
           </ul>
         </nav>
 
-        <Button asChild variant="primary" size="sm" className="ml-auto hidden h-11 sm:inline-flex lg:ml-0">
-          <a href={auditHref}>
-            Request a site audit <ArrowRight />
-          </a>
-        </Button>
+        <DriveButton
+          aria-label="Open the research drive (password)"
+          className="glass ml-auto hidden h-11 items-center gap-2.5 rounded-full px-4 text-[14px] font-semibold text-ink transition-colors hover:bg-white/10 sm:inline-flex lg:ml-0"
+        >
+          <DriveGlyph className="w-[18px]" /> Drive
+        </DriveButton>
+        <Link
+          href="/downloads"
+          className="hidden h-11 items-center gap-2 rounded-full bg-helios px-5 text-[14px] font-semibold text-navy-900 transition-colors hover:bg-helios-300 md:inline-flex"
+        >
+          Documents <ArrowRight className="size-4" />
+        </Link>
 
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
-          className="ml-auto grid size-11 place-items-center rounded-full border border-line bg-white text-navy transition-colors hover:bg-tint sm:ml-0 lg:hidden"
+          className="glass ml-auto grid size-11 place-items-center rounded-full text-ink transition-colors hover:bg-white/10 sm:ml-0 lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -131,10 +132,9 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.35, ease: EASE }}
-            className="fixed inset-x-0 bottom-0 overflow-y-auto border-t border-line bg-white lg:hidden"
-            style={{ top: scrolled ? 64 : 80 }}
+            className="glass-strong fixed inset-x-3 bottom-3 top-[84px] overflow-y-auto rounded-panel lg:hidden"
           >
-            <nav aria-label="Mobile" className="container flex min-h-full flex-col pb-10 pt-4">
+            <nav aria-label="Mobile" className="flex min-h-full flex-col px-6 pb-8 pt-3">
               <ul>
                 {[{ href: "/", label: "Home" }, ...NAV].map((l, i) => (
                   <motion.li
@@ -147,8 +147,8 @@ export function Header() {
                       href={l.href}
                       aria-current={path === l.href ? "page" : undefined}
                       className={cn(
-                        "flex items-center justify-between border-b border-line py-4 text-[1.6rem] font-semibold tracking-display",
-                        path === l.href ? "text-cobalt" : "text-ink"
+                        "flex items-center justify-between border-b border-white/10 py-4 text-[1.6rem] font-semibold tracking-display",
+                        path === l.href ? "text-helios-300" : "text-ink"
                       )}
                     >
                       {l.label}
@@ -158,15 +158,13 @@ export function Header() {
                 ))}
               </ul>
               <ReferencesDrawer>
-                <button className="flex items-center justify-between border-b border-line py-4 text-left text-[1.6rem] font-semibold tracking-display text-ink">
+                <button className="flex items-center justify-between border-b border-white/10 py-4 text-left text-[1.6rem] font-semibold tracking-display text-ink">
                   References <ArrowUpRight className="size-5 text-muted" />
                 </button>
               </ReferencesDrawer>
-              <Button asChild variant="primary" size="lg" className="mt-8">
-                <a href={auditHref}>
-                  Request a site audit <ArrowRight />
-                </a>
-              </Button>
+              <DriveButton className="glass mt-8 inline-flex h-14 items-center justify-center gap-3 rounded-full text-base font-semibold text-ink">
+                <DriveGlyph className="w-5" /> Open the research drive
+              </DriveButton>
             </nav>
           </motion.div>
         )}
